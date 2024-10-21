@@ -5,7 +5,10 @@
 package com.Gestor;
 
 import java.awt.Color;
-import java.io.File;
+import java.io.File;//para archivoso
+import java.util.HashMap; //para los duplicados
+import java.util.List;//para que funcione la funcion de busqueda
+import java.util.Map; //para los duplicados
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -24,7 +27,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
      * Creates new form InterfazPrincipal
      */
 
-    public InterfazPrincipal() {
+    public InterfazPrincipal() {//constructor
         initComponents();
          this.setLocationRelativeTo(null);//centrar Jpanel   
          interfazMusica = new InterfazMusica();
@@ -58,8 +61,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         panelVideo = new javax.swing.JPanel();
+        panelVideo1 = new javax.swing.JPanel();
         panelFlv = new javax.swing.JPanel();
         panelImagen = new javax.swing.JPanel();
+        panelDuplicados = new javax.swing.JPanel();
         RutaSeleccionada = new javax.swing.JTextField();
         NodoPrincipal = new com.Gestor.PanelRound();
         NombreGestor = new com.Gestor.PanelRound();
@@ -254,15 +259,31 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         Pestaniaspanle.addTab("tab1", panelMusica);
 
+        javax.swing.GroupLayout panelVideo1Layout = new javax.swing.GroupLayout(panelVideo1);
+        panelVideo1.setLayout(panelVideo1Layout);
+        panelVideo1Layout.setHorizontalGroup(
+            panelVideo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 514, Short.MAX_VALUE)
+        );
+        panelVideo1Layout.setVerticalGroup(
+            panelVideo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 260, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout panelVideoLayout = new javax.swing.GroupLayout(panelVideo);
         panelVideo.setLayout(panelVideoLayout);
         panelVideoLayout.setHorizontalGroup(
             panelVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addGroup(panelVideoLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(panelVideo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
         panelVideoLayout.setVerticalGroup(
             panelVideoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 407, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelVideoLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(panelVideo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         Pestaniaspanle.addTab("tab2", panelVideo);
@@ -271,11 +292,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         panelFlv.setLayout(panelFlvLayout);
         panelFlvLayout.setHorizontalGroup(
             panelFlvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
         panelFlvLayout.setVerticalGroup(
             panelFlvLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 407, Short.MAX_VALUE)
+            .addGap(0, 260, Short.MAX_VALUE)
         );
 
         Pestaniaspanle.addTab("tab3", panelFlv);
@@ -284,14 +305,27 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         panelImagen.setLayout(panelImagenLayout);
         panelImagenLayout.setHorizontalGroup(
             panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 545, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
         panelImagenLayout.setVerticalGroup(
             panelImagenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 407, Short.MAX_VALUE)
+            .addGap(0, 260, Short.MAX_VALUE)
         );
 
         Pestaniaspanle.addTab("tab4", panelImagen);
+
+        javax.swing.GroupLayout panelDuplicadosLayout = new javax.swing.GroupLayout(panelDuplicados);
+        panelDuplicados.setLayout(panelDuplicadosLayout);
+        panelDuplicadosLayout.setHorizontalGroup(
+            panelDuplicadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 540, Short.MAX_VALUE)
+        );
+        panelDuplicadosLayout.setVerticalGroup(
+            panelDuplicadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 260, Short.MAX_VALUE)
+        );
+
+        Pestaniaspanle.addTab("tab5", panelDuplicados);
 
         javax.swing.GroupLayout DatosLayout = new javax.swing.GroupLayout(Datos);
         Datos.setLayout(DatosLayout);
@@ -299,18 +333,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DatosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Pestaniaspanle)
-                .addContainerGap())
+                .addComponent(Pestaniaspanle, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         DatosLayout.setVerticalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DatosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Pestaniaspanle)
-                .addContainerGap())
+                .addComponent(Pestaniaspanle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        nodo1.add(Datos, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 147, -1, -1));
+        nodo1.add(Datos, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 147, 560, -1));
 
         RutaSeleccionada.setEditable(false);
         RutaSeleccionada.setFont(new java.awt.Font("Roboto Medium", 0, 12)); // NOI18N
@@ -321,7 +355,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         });
         nodo1.add(RutaSeleccionada, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 550, -1));
 
-        fondo.add(nodo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 580, 460));
+        fondo.add(nodo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 580, 470));
 
         NodoPrincipal.setBackground(new java.awt.Color(153, 153, 153));
         NodoPrincipal.setForeground(new java.awt.Color(153, 153, 153));
@@ -415,6 +449,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         Duplicados.setFont(new java.awt.Font("Roboto Black", 1, 12)); // NOI18N
         Duplicados.setText("Editar Duplicados");
         Duplicados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Duplicados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DuplicadosMouseClicked(evt);
+            }
+        });
         Duplicados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DuplicadosActionPerformed(evt);
@@ -481,13 +520,28 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(fondo, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public void buscarArchivosRecursiva(File carpeta, List<File> listaArchivos) {
+    File[] archivos = carpeta.listFiles(); // jala todos los archivos de la carpeta que selc
     
+    if (archivos != null) {
+        for (File archivo : archivos) {
+            if (archivo.isDirectory()) {
+                // Si es una carpeta entra otra vez
+                buscarArchivosRecursiva(archivo, listaArchivos);
+            } else {
+                // si es un archivo lo agrega a la cosa de la lista
+                listaArchivos.add(archivo);
+            }
+        }
+    }
+}
+
     private void ChooseFileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChooseFileMouseEntered
         ChooseFile.setBackground(Color.black);
         Origen9.setForeground(Color.white);
@@ -499,38 +553,66 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_ChooseFileMouseExited
 
     private void Origen9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Origen9MouseClicked
-            JFileChooser FileRuta = new JFileChooser(); // crear el FileChooser
-            FileRuta.setMultiSelectionEnabled(true);
+            JFileChooser FileRuta = new JFileChooser(); // crear la venta del filechooser
+            FileRuta.setMultiSelectionEnabled(true);//hacer que seleccione varis archivos
             FileRuta.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // Filtro para solo carpetas y archivos
+            
             int resultado = FileRuta.showOpenDialog(this); // mostrar ventana para la selección
-
-        if (resultado != JFileChooser.CANCEL_OPTION) { // Si el usuario no cancela la selección
-            File carpeta = FileRuta.getSelectedFile(); // Obtener la carpeta 
-
-                if (carpeta == null || carpeta.getName().equals("")) { // ver si la ruta es aceptada
-                JOptionPane.showMessageDialog(this, "Error al cargar la carpeta"); // error de carga
-            } else {
-                File[] archivos = carpeta.listFiles(); // creo un arreglo de archivos
-                RutaSeleccionada.setText(carpeta.getAbsolutePath()); // llenar el txt field
+            if (resultado != JFileChooser.CANCEL_OPTION) { // Si el usuario no cancela la selección
+                File carpeta = FileRuta.getSelectedFile(); // Obtener la ruta de carpeta 
                 
-                int cantidadArchivos = archivos.length; // obtener la cantidad de archivos
-                NumeroArchivos.setText(String.valueOf(cantidadArchivos)); // set txt es string así que hay que convertirlo a int
-
-                long totalArchivos = 0; // variable para almacenar el peso total
-
-                for (File archivo : archivos) { // recorro con el for each cada archivo
-                    if (archivo.isFile()) { // ver que solo sean archivos
-                        totalArchivos += archivo.length(); // acumular cada archivo en peso
-                    }
-                }
-
-                // Convertir a gigas
-                double archivosGB = totalArchivos / (1024.0 * 1024.0 * 1024.0); 
-                EspacioOcupado.setText(String.format("%.2f GB", archivosGB)); // mostrar en el text field
-                //System.out.println("Total Archivos: " + archivosGB); // imprimir en consola
-            }
-        }
-
+                if (carpeta == null || carpeta.getName().equals("")) { // ver si si acepta la ruta
+                    JOptionPane.showMessageDialog(this, "Error al cargar la carpeta"); // error de carga
+                } else {
+                        File[] archivos = carpeta.listFiles(); // creo un arreglo de archivos
+                        
+                        long totalBytes = 0; // para acumular todos loa archivos
+                        int cantidadArchivos = 0; // Contador de archivos
+                        Map<String, Long> archivosMap = new HashMap<>();//crear el hashmap
+                        int archivosDuplicados = 0;
+                        
+                        for (File archivo : archivos){//para el tipo:file archivo de archivos
+                            if (archivo.isFile()){//si es un archivo
+                                totalBytes += archivo.length(); //suma el tamano
+                                cantidadArchivos++;//suma el archivo 
+                                
+                                String nombreArchivo = archivo.getName();
+                                long tamanoArchivo = archivo.length();
+                                if (archivosMap.containsKey(nombreArchivo) && archivosMap.get(nombreArchivo) == tamanoArchivo){//compara nombre y tamano para saber si es duplicado
+                                    archivosDuplicados++;//si es duplicado
+                                }else{
+                                    archivosMap.put(nombreArchivo, tamanoArchivo);
+                                }
+                            }else if (archivo.isDirectory()){//si es una carpeta
+                                File[] subArchivos = archivo.listFiles();//para tener los archivos dentro de carpetas
+                                if (subArchivos != null){
+                                    for (File subArchivo : subArchivos){
+                                        if (subArchivo.isFile());//si es tipo archivo
+                                            totalBytes += subArchivo.length();//sumar el tamano
+                                            cantidadArchivos++;//contarlo
+                                            
+                                            // buscar duplicados en niveles bajos 
+                                            String nombreSubArchivo = subArchivo.getName();
+                                            Long tamanoSubArchivo = subArchivo.length();
+                                            
+                                            if (archivosMap.containsKey(nombreSubArchivo) && archivosMap.get(nombreSubArchivo) == tamanoSubArchivo){
+                                                archivosDuplicados++;
+                                            }else{
+                                                archivosMap.put(nombreSubArchivo, tamanoSubArchivo);
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                                
+                            }//for que recorre todos los archivos
+                        NumeroArchivos.setText(String.valueOf(cantidadArchivos));//llenar el field de ruta
+                        double totalGB = totalBytes /(1020.0 * 1020.0 * 1020.0);
+                        EspacioOcupado.setText(String.format("%.2f GB",totalGB));
+                        EspacioDuplicados.setText(String.valueOf(archivosDuplicados));
+                        }//segundo else
+            }//else  principal   
+            
     }//GEN-LAST:event_Origen9MouseClicked
 
     private void BotonMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMusicaActionPerformed
@@ -613,6 +695,10 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_DuplicadosActionPerformed
 
+    private void DuplicadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DuplicadosMouseClicked
+       Pestaniaspanle.setSelectedIndex( 4);
+    }//GEN-LAST:event_DuplicadosMouseClicked
+
         
     /**
      * @param args the command line arguments
@@ -682,9 +768,11 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private com.Gestor.PanelRound nodo1;
+    private javax.swing.JPanel panelDuplicados;
     private javax.swing.JPanel panelFlv;
     private javax.swing.JPanel panelImagen;
     private javax.swing.JPanel panelMusica;
     private javax.swing.JPanel panelVideo;
+    private javax.swing.JPanel panelVideo1;
     // End of variables declaration//GEN-END:variables
 }
