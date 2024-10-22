@@ -6,22 +6,18 @@ package com.Gestor;
 
 import java.awt.Color;
 import java.io.File;//para archivoso
-import java.util.HashMap; //para los duplicados
+import java.util.ArrayList;
 import java.util.List;//para que funcione la funcion de busqueda
-import java.util.Map; //para los duplicados
+import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;//para la tabla
 
 /**
  *
  * @author guide
  */
 public class InterfazPrincipal extends javax.swing.JFrame {
-    //public InterfazPrincipal interfazPrincipal;    
-      public InterfazMusica interfazMusica;
-      public InterfazVideo interfazVideo;
-      public InterfazFlv interfazFlv;
-      public InterfazImagen interfazImagen;
     
     /**
      * Creates new form InterfazPrincipal
@@ -30,10 +26,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     public InterfazPrincipal() {//constructor
         initComponents();
          this.setLocationRelativeTo(null);//centrar Jpanel   
-         interfazMusica = new InterfazMusica();
-         interfazVideo = new InterfazVideo();
-         interfazImagen = new InterfazImagen();
-         interfazFlv = new InterfazFlv();
     }
 
     
@@ -242,18 +234,36 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         panelMusica.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Fecha", "Title 3", "Title 4", "Title 5"
+                "Nombre", "Artista", "Albúm", "Genero", "Duración", "Año", "Tamaño"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(1).setResizable(false);
+            jTable1.getColumnModel().getColumn(2).setResizable(false);
+            jTable1.getColumnModel().getColumn(3).setResizable(false);
+            jTable1.getColumnModel().getColumn(4).setResizable(false);
+            jTable1.getColumnModel().getColumn(5).setResizable(false);
+            jTable1.getColumnModel().getColumn(6).setResizable(false);
+        }
 
         panelMusica.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 530, 250));
 
@@ -520,7 +530,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(fondo, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+            .addComponent(fondo, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
         );
 
         pack();
@@ -539,8 +549,32 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 listaArchivos.add(archivo);
             }
         }
-    }
-}
+     }
+   } 
+     private void mostrarDatosJtableMusica (File[]archivos){
+         ExtraerMetadatos extraerMusica = new ExtraerMetadatos(); //instaciar la clase de extraer
+         
+         String []columnas = { "Nombre", "Artista", "Album", " Genero", " anio", "Duracion", " Tamano"};
+         DefaultTableModel modeloMusica = new DefaultTableModel (columnas, 0 );
+         
+         for (File archivo: archivos){
+             
+             Map<String,String> metadatos = extraerMusica.extraerMetadatos(archivo);
+             
+             Object [] fila = {
+                 metadatos.get("nombre"),
+                 metadatos.get("artista"),
+                 metadatos.get("album"),
+                 metadatos.get("genero"),
+                 metadatos.get("anio"),
+                 metadatos.get("duracion"),
+                 metadatos.get("tamanio"),   
+             };
+              modeloMusica.addRow(fila);
+         }
+          jTable1.setModel(modeloMusica); 
+     }
+    
 
     private void ChooseFileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ChooseFileMouseEntered
         ChooseFile.setBackground(Color.black);
@@ -553,66 +587,36 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_ChooseFileMouseExited
 
     private void Origen9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Origen9MouseClicked
-            JFileChooser FileRuta = new JFileChooser(); // crear la venta del filechooser
-            FileRuta.setMultiSelectionEnabled(true);//hacer que seleccione varis archivos
-            FileRuta.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // Filtro para solo carpetas y archivos
-            
-            int resultado = FileRuta.showOpenDialog(this); // mostrar ventana para la selección
-            if (resultado != JFileChooser.CANCEL_OPTION) { // Si el usuario no cancela la selección
-                File carpeta = FileRuta.getSelectedFile(); // Obtener la ruta de carpeta 
+        JFileChooser FileRuta = new JFileChooser(); //crear el filchooser
+        FileRuta.setMultiSelectionEnabled(true);//leseccionar varias cosas
+        FileRuta.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);//filtro para carpetas y archivos
+
+        int resultado = FileRuta.showOpenDialog(this); //mostrar el chosefile
+        if (resultado != JFileChooser.CANCEL_OPTION) {//si no cancela
+            File carpeta = FileRuta.getSelectedFile(); 
+            if (carpeta != null && !carpeta.getName().equals("")) {//si la carpeta es valida
+                ProcesarArchivos procesador = new ProcesarArchivos();//intacia de la que tengo de procesar
+                //FiltroArchivos filtro = new FiltroArchivos(); // crear instancia del filtro
                 
-                if (carpeta == null || carpeta.getName().equals("")) { // ver si si acepta la ruta
-                    JOptionPane.showMessageDialog(this, "Error al cargar la carpeta"); // error de carga
-                } else {
-                        File[] archivos = carpeta.listFiles(); // creo un arreglo de archivos
-                        
-                        long totalBytes = 0; // para acumular todos loa archivos
-                        int cantidadArchivos = 0; // Contador de archivos
-                        Map<String, Long> archivosMap = new HashMap<>();//crear el hashmap
-                        int archivosDuplicados = 0;
-                        
-                        for (File archivo : archivos){//para el tipo:file archivo de archivos
-                            if (archivo.isFile()){//si es un archivo
-                                totalBytes += archivo.length(); //suma el tamano
-                                cantidadArchivos++;//suma el archivo 
-                                
-                                String nombreArchivo = archivo.getName();
-                                long tamanoArchivo = archivo.length();
-                                if (archivosMap.containsKey(nombreArchivo) && archivosMap.get(nombreArchivo) == tamanoArchivo){//compara nombre y tamano para saber si es duplicado
-                                    archivosDuplicados++;//si es duplicado
-                                }else{
-                                    archivosMap.put(nombreArchivo, tamanoArchivo);
-                                }
-                            }else if (archivo.isDirectory()){//si es una carpeta
-                                File[] subArchivos = archivo.listFiles();//para tener los archivos dentro de carpetas
-                                if (subArchivos != null){
-                                    for (File subArchivo : subArchivos){
-                                        if (subArchivo.isFile());//si es tipo archivo
-                                            totalBytes += subArchivo.length();//sumar el tamano
-                                            cantidadArchivos++;//contarlo
-                                            
-                                            // buscar duplicados en niveles bajos 
-                                            String nombreSubArchivo = subArchivo.getName();
-                                            Long tamanoSubArchivo = subArchivo.length();
-                                            
-                                            if (archivosMap.containsKey(nombreSubArchivo) && archivosMap.get(nombreSubArchivo) == tamanoSubArchivo){
-                                                archivosDuplicados++;
-                                            }else{
-                                                archivosMap.put(nombreSubArchivo, tamanoSubArchivo);
-                                            }
-                                            
-                                        }
-                                    }
-                                }
-                                
-                            }//for que recorre todos los archivos
-                        NumeroArchivos.setText(String.valueOf(cantidadArchivos));//llenar el field de ruta
-                        double totalGB = totalBytes /(1020.0 * 1020.0 * 1020.0);
-                        EspacioOcupado.setText(String.format("%.2f GB",totalGB));
-                        EspacioDuplicados.setText(String.valueOf(archivosDuplicados));
-                        }//segundo else
-            }//else  principal   
+                List<File> listaArchivos = new ArrayList <>();
+                buscarArchivosRecursiva(carpeta, listaArchivos);
+                mostrarDatosJtableMusica (listaArchivos.toArray (File[]::new));
+        File[] archivos = carpeta.listFiles();//gaurdar en un array
+        for (File archivo : archivos) {//recorred todoe el array
+                procesador.procesar(archivo);//llamar al metodo de la clase
+        }
+
+            // obtener los resultados y llenar los text fields tablas, etc
+            NumeroArchivos.setText(String.valueOf(procesador.getcantidadarchivos()));
+            EspacioOcupado.setText(String.format("%.2f GB", procesador.gettotalgb()));
+            EspacioDuplicados.setText(String.valueOf(procesador.getarchivosduplicados()));
+            RutaSeleccionada.setText(carpeta.getAbsolutePath());
             
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al cargar la carpeta");
+        }
+}
+      
     }//GEN-LAST:event_Origen9MouseClicked
 
     private void BotonMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonMusicaActionPerformed
