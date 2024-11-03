@@ -5,9 +5,13 @@
         <group>
             <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/InterfazPrincipal.java</file>
             <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/ProcesarArchivos.java</file>
+            <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/ExtraerMetadatosVideo.java</file>
             <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/FiltroArchivos.java</file>
-            <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/PanelRound.java</file>
-            <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/ExtraerMetadatos.java</file>
+            <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/ExtraerMetadatosMusica.java</file>
+            <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/MetadatosVideo.java</file>
+            <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/ReproductorVideo.java</file>
+            <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/ExtraerMetadatosImagen.java</file>
+            <file>file:/C:/Users/guide/Documents/NetBeansProjects/ProyectoFinalGestor/src/com/Gestor/MetadatosImagen.java</file>
         </group>
     </open-files>
 </project-private>
